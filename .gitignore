@@ -11,4 +11,4 @@ build/
 *.ipr
 *.iws
 .DS_Store
-.devcontainer/.env
+/.devcontainer/.env
