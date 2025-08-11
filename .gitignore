@@ -1,0 +1,14 @@
+.dart_tool/
+.packages
+.idea/
+.android/
+.ios/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+.devcontainer/.env

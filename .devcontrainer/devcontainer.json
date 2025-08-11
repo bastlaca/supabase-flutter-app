@@ -1,0 +1,41 @@
+{
+  "name": "Flutter Dev Env with Android",
+  "dockerComposeFile": [
+    "docker-compose.yaml"
+  ],
+  "workspaceFolder": "/workspace",
+  "service": "dev",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [9222, 5500, 9100, 5037, 9101],
+  "portsAttributes": {
+    "9222": {
+      "label": "Chrome Debug Protocol",
+      "onAutoForward": "notify"
+    },
+    "5500": {
+      "label": "Flutter Web Server",
+      "onAutoForward": "openBrowser"
+    },
+    "9100": {
+      "label": "Flutter DDS",
+      "onAutoForward": "ignore"
+    },
+    "5037": {
+      "label": "ADB Server",
+      "onAutoForward": "ignore"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter",
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.android,target=/root/.android,type=bind,consistency=cached"
+  ]
+}

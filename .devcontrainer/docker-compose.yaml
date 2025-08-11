@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  dev:
+    platform: linux/amd64
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        - GIT_USERNAME=${GIT_USERNAME}
+        - GIT_EMAIL=${GIT_EMAIL}
+    container_name: ${CONTAINER_NAME}
+    volumes:
+      - ..:/workspace
+    ports:
+      - "9222:9222"  # Chrome Debug Protocol
+      - "5500:5500"  # Flutter web-server port
+      - "9100:9100"  # Flutter DDS port
+      - "9101:9101"  # Observatory port
+      - "5037:5037"  # ADB port
+    network_mode: host  # Szükséges az ADB kapcsolathoz
+    tty: true
+    privileged: true
+    environment:
+    # Emulátorhoz szükséges, de nagyon rapszodikusan működik
+#      - ADB_SERVER_SOCKET=tcp:host.docker.internal:5037
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
