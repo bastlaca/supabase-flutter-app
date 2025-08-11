@@ -12,3 +12,4 @@ build/
 *.iws
 .DS_Store
 /.devcontainer/.env
+/.vscode/
