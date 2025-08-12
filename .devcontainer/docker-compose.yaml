@@ -7,22 +7,17 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
       args:
-        - GIT_USERNAME=${GIT_USERNAME}
-        - GIT_EMAIL=${GIT_EMAIL}
+        GIT_USERNAME: ${GIT_USERNAME}
+        GIT_EMAIL: ${GIT_EMAIL}
     container_name: ${CONTAINER_NAME}
     volumes:
-      - ..:/workspace
-    ports:
-      - "9222:9222"  # Chrome Debug Protocol
-      - "5500:5500"  # Flutter web-server port
-      - "9100:9100"  # Flutter DDS port
-      - "9101:9101"  # Observatory port
-      - "5037:5037"  # ADB port
-    network_mode: host  # Szükséges az ADB kapcsolathoz
-    tty: true
-    privileged: true
+      - ..:/workspace:cached
     environment:
-    # Emulátorhoz szükséges, de nagyon rapszodikusan működik
-#      - ADB_SERVER_SOCKET=tcp:host.docker.internal:5037
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
+    # Keep the container alive and give it an init (PID 1 signal handling)
+    command: /bin/sh -lc "trap 'exit 0' TERM; while sleep 3600; do :; done"
+    tty: true
+    init: true
+    # If you use ADB over Wi-Fi, usually no port is needed, but if connecting to host device:
+    # network_mode: host  # On macOS, useful not in compose but with separate builder
