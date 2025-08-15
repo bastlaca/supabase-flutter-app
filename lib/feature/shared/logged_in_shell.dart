@@ -9,6 +9,15 @@ class LoggedInShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Use GoRouter's current location in a more robust way
+    final String location = GoRouterState.of(context).matchedLocation;
+
+    // Determine current index based on exact path matching
+    int currentIndex = switch (location) {
+      '/loggedin/page1' => 0,
+      '/loggedin/page2' => 1,
+      _ => 0, // Default to first tab
+    };
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       behavior: HitTestBehavior.opaque,
@@ -26,6 +35,7 @@ class LoggedInShell extends ConsumerWidget {
           child: child,
         ),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Page1'),
             BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Page2'),
